@@ -1,0 +1,12 @@
+int bitAnd(int, int);
+int test_bitAnd(int, int);
+int fitsShort(int);
+int test_fitsShort(int);
+int fitsBits(int, int);
+int test_fitsBits(int, int);
+int isAsciiDigit(int);
+int test_isAsciiDigit(int);
+int isPower2(int);
+int test_isPower2(int);
+unsigned float_half(unsigned);
+unsigned test_float_half(unsigned);
