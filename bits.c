@@ -1,8 +1,8 @@
-/* 
- * CS:APP Data Lab 
- * 
- * <Please put your name and userid here>
- * 
+/*
+ * CS:APP Data Lab
+ *
+ * < Rijnder Wever 10801944 Max Crous 10771085 >
+ *
  * bits.c - Source file with your solutions to the Lab.
  *          This is the file you will hand in to your instructor.
  *
@@ -10,7 +10,7 @@
  * compiler. You can still use printf for debugging without including
  * <stdio.h>, although you might get a compiler warning. In general,
  * it's not good practice to ignore compiler warnings, but in this
- * case it's OK.  
+ * case it's OK.
  */
 
 #if 0
@@ -24,11 +24,11 @@ You will provide your solution to the Data Lab by
 editing the collection of functions in this source file.
 
 INTEGER CODING RULES:
- 
+
   Replace the "return" statement in each function with one
-  or more lines of C code that implements the function. Your code 
+  or more lines of C code that implements the function. Your code
   must conform to the following style:
- 
+
   int Funct(arg1, arg2, ...) {
       /* brief description of how your implementation works */
       int var1 = Expr1;
@@ -47,7 +47,7 @@ INTEGER CODING RULES:
   2. Function arguments and local variables (no global variables).
   3. Unary integer operations ! ~
   4. Binary integer operations & ^ | + << >>
-    
+
   Some of the problems restrict the set of allowed operators even further.
   Each "Expr" may consist of multiple operators. You are not restricted to
   one operator per line.
@@ -62,7 +62,7 @@ INTEGER CODING RULES:
   7. Use any data type other than int.  This implies that you
      cannot use arrays, structs, or unions.
 
- 
+
   You may assume that your machine:
   1. Uses 2s complement, 32-bit representations of integers.
   2. Performs right shifts arithmetically.
@@ -106,60 +106,60 @@ You are expressly forbidden to:
 
 
 NOTES:
-  1. Use the dlc (data lab checker) compiler (described in the handout) to 
+  1. Use the dlc (data lab checker) compiler (described in the handout) to
      check the legality of your solutions.
   2. Each function has a maximum number of operators (! ~ & ^ | + << >>)
-     that you are allowed to use for your implementation of the function. 
-     The max operator count is checked by dlc. Note that '=' is not 
+     that you are allowed to use for your implementation of the function.
+     The max operator count is checked by dlc. Note that '=' is not
      counted; you may use as many of these as you want without penalty.
   3. Use the btest test harness to check your functions for correctness.
   4. Use the BDD checker to formally verify your functions
   5. The maximum number of ops for each function is given in the
-     header comment for each function. If there are any inconsistencies 
+     header comment for each function. If there are any inconsistencies
      between the maximum ops in the writeup and in this file, consider
      this file the authoritative source.
 
 /*
  * STEP 2: Modify the following functions according the coding rules.
- * 
+ *
  *   IMPORTANT. TO AVOID GRADING SURPRISES:
  *   1. Use the dlc compiler to check that your solutions conform
  *      to the coding rules.
- *   2. Use the BDD checker to formally verify that your solutions produce 
+ *   2. Use the BDD checker to formally verify that your solutions produce
  *      the correct answers.
  */
 
 
 #endif
 
-/* 
+/*
  * CS:APP Data Lab @ Universiteit van Amsterdam
  *
  * Modification to original Data Lab:
  *
- * the collection of puzzles is automatically generated for each 
+ * the collection of puzzles is automatically generated for each
  * programming pair.
- * 
+ *
  * Augustus 2016: A.Visser@uva.nl
  *
  */
 
 
-
 /* Global ID to identify the combination of puzzles */
 int lab_id = 49;
-/* 
- * bitAnd - x&y using only ~ and | 
+/*
+ * bitAnd - x&y using only ~ and |
  *   Example: bitAnd(6, 5) = 4
  *   Legal ops: ~ |
  *   Max ops: 8
  *   Rating: 1
  */
 int bitAnd(int x, int y) {
-  return 2;
+//  printf(" yehh %d\n", ~(~x|~y) );
+  return ~(~x|~y);
 }
-/* 
- * fitsShort - return 1 if x can be represented as a 
+/*
+ * fitsShort - return 1 if x can be represented as a
  *   16-bit, two's complement integer.
  *   Examples: fitsShort(33000) = 0, fitsShort(-32768) = 1
  *   Legal ops: ! ~ & ^ | + << >>
@@ -169,8 +169,8 @@ int bitAnd(int x, int y) {
 int fitsShort(int x) {
   return 2;
 }
-/* 
- * fitsBits - return 1 if x can be represented as an 
+/*
+ * fitsBits - return 1 if x can be represented as an
  *  n-bit, two's complement integer.
  *   1 <= n <= 32
  *   Examples: fitsBits(5,3) = 0, fitsBits(-4,3) = 1
@@ -181,7 +181,7 @@ int fitsShort(int x) {
 int fitsBits(int x, int n) {
   return 2;
 }
-/* 
+/*
  * isAsciiDigit - return 1 if 0x30 <= x <= 0x39 (ASCII codes for characters '0' to '9')
  *   Example: isAsciiDigit(0x35) = 1.
  *            isAsciiDigit(0x3a) = 0.
@@ -204,7 +204,7 @@ int isAsciiDigit(int x) {
 int isPower2(int x) {
   return 2;
 }
-/* 
+/*
  * float_half - Return bit-level equivalent of expression 0.5*f for
  *   floating point argument f.
  *   Both the argument and result are passed as unsigned int's, but
