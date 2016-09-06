@@ -155,7 +155,6 @@ int lab_id = 49;
  *   Rating: 1
  */
 int bitAnd(int x, int y) {
-//  printf(" yehh %d\n", ~(~x|~y) );
   return ~(~x|~y);
 }
 /*
@@ -167,7 +166,8 @@ int bitAnd(int x, int y) {
  *   Rating: 1
  */
 int fitsShort(int x) {
-  return 2;
+		printf("%d\n", x);
+	  return !(x<<16);
 }
 /*
  * fitsBits - return 1 if x can be represented as an
