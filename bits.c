@@ -30,7 +30,7 @@ ______ ________  ________  _   _ _____   _____ _   _ _____ _____
 #include <stdio.h>
 #include <stdlib.h>
 
-// Prints an decimal number as an binary number
+// Prints a decimal number as an binary number
 // (example: int x = 5; printbits(sizeof(x), &x);)
 void printBits(size_t const size, void const * const ptr)
 {
@@ -50,6 +50,13 @@ void printBits(size_t const size, void const * const ptr)
 }
 /* ----------------------------------------------------------------
 ******************************************************************* ------------------------------------------------------------------- */
+
+#else
+void printBits(int x, int *y)
+{
+	;
+}
+
 
 #endif
 
@@ -206,10 +213,10 @@ int bitAnd(int x, int y) {
  *   Rating: 1
  */
 int fitsShort(int x) {
-//		printBits(sizeof(x), &x);
-//		int r1 = x<<16;
-//		printBits(sizeof(r1), &r1);
-	  return (!!(x<<16) & !(x>>16)) | !x;
+		printBits(sizeof(x), &x);
+		int signed_flag = x >> 31;
+		int unsigned_number = (x ^ signed_flag); 
+	  return !(unsigned_number >> 15); // "unsigned_number >> 16" should be all zero's 
 }
 /*
  * fitsBits - return 1 if x can be represented as an
@@ -265,7 +272,7 @@ unsigned float_half(unsigned uf) {
 
 int main()
 {
-	printf("Fits short: %d", fitsShort(-2));
+	printf("Fits short: %d", fitsShort(32768));
 
 }
 
