@@ -13,6 +13,46 @@
  * case it's OK.
  */
 
+#ifdef DEBUG // add "-D DEBUG" to the compile line to define this
+
+/* ----------------------------------------------------------------
+*******************************************************************
+______ ________  ________  _   _ _____   _____ _   _ _____ _____
+| ___ \  ___|  \/  |  _  || | | |  ___| |_   _| | | |_   _/  ___|
+| |_/ / |__ | .  . | | | || | | | |__     | | | |_| | | | \ `--.
+|    /|  __|| |\/| | | | || | | |  __|    | | |  _  | | |  `--. \
+| |\ \| |___| |  | \ \_/ /\ \_/ / |___    | | | | | |_| |_/\__/ /
+\_| \_\____/\_|  |_/\___/  \___/\____/    \_/ \_| |_/\___/\____/
+
+*******************************************************************
+------------------------------------------------------------------- */
+
+#include <stdio.h>
+#include <stdlib.h>
+
+// Prints an decimal number as an binary number
+// (example: int x = 5; printbits(sizeof(x), &x);)
+void printBits(size_t const size, void const * const ptr)
+{
+    unsigned char *b = (unsigned char*) ptr;
+    unsigned char byte;
+    int i, j;
+
+    for (i=size-1;i>=0;i--)
+    {
+        for (j=7;j>=0;j--)
+        {
+            byte = (b[i] >> j) & 1;
+            printf("%u", byte);
+        }
+    }
+    puts("");
+}
+/* ----------------------------------------------------------------
+******************************************************************* ------------------------------------------------------------------- */
+
+#endif
+
 #if 0
 /*
  * Instructions to Students:
@@ -166,8 +206,10 @@ int bitAnd(int x, int y) {
  *   Rating: 1
  */
 int fitsShort(int x) {
-		printf("%d\n", x);
-	  return !(x<<16);
+//		printBits(sizeof(x), &x);
+//		int r1 = x<<16;
+//		printBits(sizeof(r1), &r1);
+	  return (!!(x<<16) & !(x>>16)) | !x;
 }
 /*
  * fitsBits - return 1 if x can be represented as an
@@ -218,3 +260,14 @@ int isPower2(int x) {
 unsigned float_half(unsigned uf) {
   return 2;
 }
+
+#ifdef DEBUG
+
+int main()
+{
+	printf("Fits short: %d", fitsShort(-2));
+
+}
+
+#endif
+
