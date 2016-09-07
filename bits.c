@@ -258,8 +258,9 @@ int isAsciiDigit(int x) {
 
 	int ascii_suffix_2th = (ascii_suffix&2)>>1;
 	int ascii_suffix_3th = (ascii_suffix&4)>>2;
+	int ascii_suffix_4th = ascii_suffix>>3;
 
-	int has_ascii_suffix = ascii_suffix>>3 & (ascii_suffix_2th | ascii_suffix_3th);
+	int has_ascii_suffix = ascii_suffix_4th & (ascii_suffix_2th | ascii_suffix_3th);
 
 	// De morgan was applied to this
 	return !(has_ascii_prefix | has_ascii_suffix);
