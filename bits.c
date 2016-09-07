@@ -216,7 +216,7 @@ int fitsShort(int x) {
 	int signed_flag = x >> 31; // Either all zeros or all ones depending on the sign
 	int unsigned_number = (x ^ signed_flag);	// Flip bytes iff signed
 	// "unsigned_number >> 15" should equal zero to fit in a short
-	return !(unsigned_number >> 15); 
+	return !(unsigned_number >> 15);
 }
 /*
  * fitsBits - return 1 if x can be represented as an
@@ -227,10 +227,20 @@ int fitsShort(int x) {
  *	 Max ops: 15
  *	 Rating: 2
  */
+
 int fitsBits(int x, int n) {
-	return 2;
+
+ int signed_flag = x >> 31; // Either all zeros or all ones depending on the sign
+ int unsigned_number = (x ^ signed_flag);	// Flip bytes iff signed
+ int neg_one = ~(0);
+ int bits_shift = neg_one + n; // Shift depends on the desired amount of bits
+ // "unsigned_number >> bits_shift" will equal zero if the number fits in the bits
+ int shifted = unsigned_number >> bits_shift;
+ return !(shifted);
 }
-/* 
+
+
+/*
  * isAsciiDigit - return 1 if 0x30 <= x <= 0x39 (ASCII codes for characters '0' to '9')
  *	 Example: isAsciiDigit(0x35) = 1.
  *						isAsciiDigit(0x3a) = 0.
@@ -254,6 +264,8 @@ int isAsciiDigit(int x) {
 	// De morgan was applied to this
 	return !(has_ascii_prefix | has_ascii_suffix);
 }
+
+
 /*
  * isPower2 - returns 1 if x is a power of 2, and 0 otherwise
  *	 Examples: isPower2(5) = 0, isPower2(8) = 1, isPower2(0) = 0
@@ -288,4 +300,3 @@ int main()
 }
 
 #endif
-
