@@ -17,12 +17,12 @@
 
 /* ----------------------------------------------------------------
 *******************************************************************
-______ ________	________	_	 _ _____	 _____ _	 _ _____ _____
-| ___ \	___|	\/	|	_	|| | | |	___| |_	 _| | | |_	 _/	___|
-| |_/ / |__ | .	. | | | || | | | |__		 | | | |_| | | | \ `--.
-|		/|	__|| |\/| | | | || | | |	__|		| | |	_	| | |	`--. \
-| |\ \| |___| |	| \ \_/ /\ \_/ / |___		| | | | | |_| |_/\__/ /
-\_| \_\____/\_|	|_/\___/	\___/\____/		\_/ \_| |_/\___/\____/
+______ _____ _      _____ _____ _____   _____ _   _ _____ _____
+|  _  \  ___| |    |  ___|_   _|  ___| |_   _| | | |_   _/  ___|
+| | | | |__ | |    | |__   | | | |__     | | | |_| | | | \ `--.
+| | | |  __|| |    |  __|  | | |  __|    | | |  _  | | |  `--. \
+| |/ /| |___| |____| |___  | | | |___    | | | | | |_| |_/\__/ /
+|___/ \____/\_____/\____/  \_/ \____/    \_/ \_| |_/\___/\____/
 
 *******************************************************************
 ------------------------------------------------------------------- */
@@ -230,7 +230,7 @@ int fitsShort(int x) {
 int fitsBits(int x, int n) {
 	return 2;
 }
-/*
+/* 
  * isAsciiDigit - return 1 if 0x30 <= x <= 0x39 (ASCII codes for characters '0' to '9')
  *	 Example: isAsciiDigit(0x35) = 1.
  *						isAsciiDigit(0x3a) = 0.
@@ -240,53 +240,19 @@ int fitsBits(int x, int n) {
  *	 Rating: 3
  */
 int isAsciiDigit(int x) {
-//	int y = x & 15; // 
-	// first el. deals with al numbers smaller than like 7, then with an or we look if 
-	// it is 8 or 9 by checking some stuff, and then we check if the number has like the ascii
-	// prefix and bitshift it to make it a mask, and then we check if it's not larger than the 
- 	// prefix
-//	return (!!(x&7) | (!(x&6) & !(x|9))) & ((x & 48)>>5) & !(x>>6);
-//	return (!!(x&7) ^ ! (x&6) ) & ((x & 48)>>5) & !(x>>6);
+
 	int ascii_prefix = x>>4;
 	int ascii_suffix = x&15;
-	int minus_three = ~(3) + 1;
 
-//  return (!!(x&7) ^ ! (x&6)) & ((ascii_prefix&2)>>1) & (ascii_prefix&1) & !(x>>6);
-//  return (!!(x&7) ^ ! (x&6)) & !(ascii_prefix+minus_three) & !(x>>6); // apply demorgans law?
-//	return (!!(seven_mask) ^ ! (x&6)) & !((ascii_prefix+minus_three) | (x>>6));
+	int has_ascii_prefix = (~ascii_prefix) + 4;
 
-	// False positives approach: 
+	int ascii_suffix_2th = (ascii_suffix&2)>>1;
+	int ascii_suffix_3th = (ascii_suffix&4)>>2;
 
-//	int has_ascii_prefix = !!(ascii_prefix + minus_three);
-	int has_ascii_prefix = !!(~ascii_prefix + 2); // this is pretty good
+	int has_ascii_suffix = ascii_suffix>>3 & (ascii_suffix_2th | ascii_suffix_3th);
 
-//	return !!((ascii_suffix^15) | (ascii_suffix^12) | (ascii_suffix^11)) & 
-//	!((ascii_prefix+minus_three) | (x>>6)); // demorgan
-
-	printf("Prefix: %d \n", has_ascii_prefix);
-
-	int ascii_suffix_2th = !(ascii_suffix&2);
-	printf("Suffix 2: %d \n", ascii_suffix_2th);
-	int ascii_suffix_3th = !(ascii_suffix&4);
-	printf("Suffix 3: %d \n", ascii_suffix_3th);
-	// First check four digit, then if --also--(=&) 2 or 3 are on
-//	int has_ascii_suffix = !(ascii_suffix>>3) & !(ascii_suffix_2th |  ascii_suffix_3th) // d.m
-	// After the first '&', if both of them are zero, we're good (if one of them is non-zero, 
-	// we're not)
-	int has_ascii_suffix = !(ascii_suffix>>3) & (ascii_suffix_2th &  ascii_suffix_3th); //dm
-
-	// also demorgan was applied, after the first '&'
-//	int has_ascii_suffix = !(ascii_suffix>>3) & !(ascii_suffix_2th |  ascii_suffix_3th); //dm
-//	int has_ascii_suffix = !((ascii_suffix>>3) | (ascii_suffix_2th |  ascii_suffix_3th));
-	printf("Suffix: %d \n", has_ascii_suffix);
-	return has_ascii_prefix & has_ascii_suffix;
-
-		// Good one
-//	return !( !((ascii_suffix^15) | (ascii_suffix^12) | (ascii_suffix^11)) |
-//	((ascii_prefix+minus_three) | (x>>6)) ); // demorgan
-
-
-//	return !( (x&15) | !(x^11)) & !((ascii_prefix+minus_three) | (x>>6)); 
+	// De morgan was applied to this
+	return !(has_ascii_prefix | has_ascii_suffix);
 }
 /*
  * isPower2 - returns 1 if x is a power of 2, and 0 otherwise
@@ -318,31 +284,7 @@ unsigned float_half(unsigned uf) {
 
 int main()
 {
-	for(int i=48; i < 58; i++)
-	{
-		printBits(sizeof(i), &i); 	
-//	printf("%d\n", isAsciiDigit(i));
-	}
-	printf("False positives: \n");
-	// (mask properties: digit 3&4 are on (captures last four) digits 2&4 are on (captures last 
-	// two)) \n (so capture anything that satifies the ascii prefix except the two kinds of 
-	// numbers with the properties listed above)
-	for(int i=58; i < 64; i++)
-	{
-		printBits(sizeof(i), &i); 	
-//		printf("%d\n", isAsciiDigit(i));
-	}
-	printf("--------------------------------\n");
 
-	for(int i=48; i < 58; i++)
-	{
-		printf("%d\n", isAsciiDigit(i));
-		printf("\n");
-	}
-
-//	int k = 60;
-//	printf("Input: "); printBits(sizeof(k), &k);
-//	printf("%d\n", isAsciiDigit(k));
 }
 
 #endif
