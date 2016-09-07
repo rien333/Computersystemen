@@ -4,7 +4,7 @@
  * < Rijnder Wever 10801944 Max Crous 10771085 >
  *
  * bits.c - Source file with your solutions to the Lab.
- *          This is the file you will hand in to your instructor.
+ *					This is the file you will hand in to your instructor.
  *
  * WARNING: Do not include the <stdio.h> header; it confuses the dlc
  * compiler. You can still use printf for debugging without including
@@ -17,12 +17,12 @@
 
 /* ----------------------------------------------------------------
 *******************************************************************
-______ ________  ________  _   _ _____   _____ _   _ _____ _____
-| ___ \  ___|  \/  |  _  || | | |  ___| |_   _| | | |_   _/  ___|
-| |_/ / |__ | .  . | | | || | | | |__     | | | |_| | | | \ `--.
-|    /|  __|| |\/| | | | || | | |  __|    | | |  _  | | |  `--. \
-| |\ \| |___| |  | \ \_/ /\ \_/ / |___    | | | | | |_| |_/\__/ /
-\_| \_\____/\_|  |_/\___/  \___/\____/    \_/ \_| |_/\___/\____/
+______ ________	________	_	 _ _____	 _____ _	 _ _____ _____
+| ___ \	___|	\/	|	_	|| | | |	___| |_	 _| | | |_	 _/	___|
+| |_/ / |__ | .	. | | | || | | | |__		 | | | |_| | | | \ `--.
+|		/|	__|| |\/| | | | || | | |	__|		| | |	_	| | |	`--. \
+| |\ \| |___| |	| \ \_/ /\ \_/ / |___		| | | | | |_| |_/\__/ /
+\_| \_\____/\_|	|_/\___/	\___/\____/		\_/ \_| |_/\___/\____/
 
 *******************************************************************
 ------------------------------------------------------------------- */
@@ -34,19 +34,19 @@ ______ ________  ________  _   _ _____   _____ _   _ _____ _____
 // (example: int x = 5; printbits(sizeof(x), &x);)
 void printBits(size_t const size, void const * const ptr)
 {
-    unsigned char *b = (unsigned char*) ptr;
-    unsigned char byte;
-    int i, j;
+		unsigned char *b = (unsigned char*) ptr;
+		unsigned char byte;
+		int i, j;
 
-    for (i=size-1;i>=0;i--)
-    {
-        for (j=7;j>=0;j--)
-        {
-            byte = (b[i] >> j) & 1;
-            printf("%u", byte);
-        }
-    }
-    puts("");
+		for (i=size-1;i>=0;i--)
+		{
+				for (j=7;j>=0;j--)
+				{
+						byte = (b[i] >> j) & 1;
+						printf("%u", byte);
+				}
+		}
+		puts("");
 }
 /* ----------------------------------------------------------------
 ******************************************************************* ------------------------------------------------------------------- */
@@ -72,108 +72,108 @@ editing the collection of functions in this source file.
 
 INTEGER CODING RULES:
 
-  Replace the "return" statement in each function with one
-  or more lines of C code that implements the function. Your code
-  must conform to the following style:
+	Replace the "return" statement in each function with one
+	or more lines of C code that implements the function. Your code
+	must conform to the following style:
 
-  int Funct(arg1, arg2, ...) {
-      /* brief description of how your implementation works */
-      int var1 = Expr1;
-      ...
-      int varM = ExprM;
+	int Funct(arg1, arg2, ...) {
+			/* brief description of how your implementation works */
+			int var1 = Expr1;
+			...
+			int varM = ExprM;
 
-      varJ = ExprJ;
-      ...
-      varN = ExprN;
-      return ExprR;
-  }
+			varJ = ExprJ;
+			...
+			varN = ExprN;
+			return ExprR;
+	}
 
-  Each "Expr" is an expression using ONLY the following:
-  1. Integer constants 0 through 255 (0xFF), inclusive. You are
-      not allowed to use big constants such as 0xffffffff.
-  2. Function arguments and local variables (no global variables).
-  3. Unary integer operations ! ~
-  4. Binary integer operations & ^ | + << >>
+	Each "Expr" is an expression using ONLY the following:
+	1. Integer constants 0 through 255 (0xFF), inclusive. You are
+			not allowed to use big constants such as 0xffffffff.
+	2. Function arguments and local variables (no global variables).
+	3. Unary integer operations ! ~
+	4. Binary integer operations & ^ | + << >>
 
-  Some of the problems restrict the set of allowed operators even further.
-  Each "Expr" may consist of multiple operators. You are not restricted to
-  one operator per line.
+	Some of the problems restrict the set of allowed operators even further.
+	Each "Expr" may consist of multiple operators. You are not restricted to
+	one operator per line.
 
-  You are expressly forbidden to:
-  1. Use any control constructs such as if, do, while, for, switch, etc.
-  2. Define or use any macros.
-  3. Define any additional functions in this file.
-  4. Call any functions.
-  5. Use any other operations, such as &&, ||, -, or ?:
-  6. Use any form of casting.
-  7. Use any data type other than int.  This implies that you
-     cannot use arrays, structs, or unions.
+	You are expressly forbidden to:
+	1. Use any control constructs such as if, do, while, for, switch, etc.
+	2. Define or use any macros.
+	3. Define any additional functions in this file.
+	4. Call any functions.
+	5. Use any other operations, such as &&, ||, -, or ?:
+	6. Use any form of casting.
+	7. Use any data type other than int.	This implies that you
+		 cannot use arrays, structs, or unions.
 
 
-  You may assume that your machine:
-  1. Uses 2s complement, 32-bit representations of integers.
-  2. Performs right shifts arithmetically.
-  3. Has unpredictable behavior when shifting an integer by more
-     than the word size.
+	You may assume that your machine:
+	1. Uses 2s complement, 32-bit representations of integers.
+	2. Performs right shifts arithmetically.
+	3. Has unpredictable behavior when shifting an integer by more
+		 than the word size.
 
 EXAMPLES OF ACCEPTABLE CODING STYLE:
-  /*
-   * pow2plus1 - returns 2^x + 1, where 0 <= x <= 31
-   */
-  int pow2plus1(int x) {
-     /* exploit ability of shifts to compute powers of 2 */
-     return (1 << x) + 1;
-  }
+	/*
+	 * pow2plus1 - returns 2^x + 1, where 0 <= x <= 31
+	 */
+	int pow2plus1(int x) {
+		 /* exploit ability of shifts to compute powers of 2 */
+		 return (1 << x) + 1;
+	}
 
-  /*
-   * pow2plus4 - returns 2^x + 4, where 0 <= x <= 31
-   */
-  int pow2plus4(int x) {
-     /* exploit ability of shifts to compute powers of 2 */
-     int result = (1 << x);
-     result += 4;
-     return result;
-  }
+	/*
+	 * pow2plus4 - returns 2^x + 4, where 0 <= x <= 31
+	 */
+	int pow2plus4(int x) {
+		 /* exploit ability of shifts to compute powers of 2 */
+		 int result = (1 << x);
+		 result += 4;
+		 return result;
+	}
 
 FLOATING POINT CODING RULES
 
 For the problems that require you to implent floating-point operations,
-the coding rules are less strict.  You are allowed to use looping and
-conditional control.  You are allowed to use both ints and unsigneds.
+the coding rules are less strict.	You are allowed to use looping and
+conditional control.	You are allowed to use both ints and unsigneds.
 You can use arbitrary integer and unsigned constants.
 
 You are expressly forbidden to:
-  1. Define or use any macros.
-  2. Define any additional functions in this file.
-  3. Call any functions.
-  4. Use any form of casting.
-  5. Use any data type other than int or unsigned.  This means that you
-     cannot use arrays, structs, or unions.
-  6. Use any floating point data types, operations, or constants.
+	1. Define or use any macros.
+	2. Define any additional functions in this file.
+	3. Call any functions.
+	4. Use any form of casting.
+	5. Use any data type other than int or unsigned.	This means that you
+		 cannot use arrays, structs, or unions.
+	6. Use any floating point data types, operations, or constants.
 
 
 NOTES:
-  1. Use the dlc (data lab checker) compiler (described in the handout) to
-     check the legality of your solutions.
-  2. Each function has a maximum number of operators (! ~ & ^ | + << >>)
-     that you are allowed to use for your implementation of the function.
-     The max operator count is checked by dlc. Note that '=' is not
-     counted; you may use as many of these as you want without penalty.
-  3. Use the btest test harness to check your functions for correctness.
-  4. Use the BDD checker to formally verify your functions
-  5. The maximum number of ops for each function is given in the
-     header comment for each function. If there are any inconsistencies
-     between the maximum ops in the writeup and in this file, consider
-     this file the authoritative source.
+	1. Use the dlc (data lab checker) compiler (described in the handout) to
+		 check the legality of your solutions.
+	2. Each function has a maximum number of operators (! ~ & ^ | + << >>)
+		 that you are allowed to use for your implementation of the function.
+		 The max operator count is checked by dlc. Note that '=' is not
+		 counted; you may use as many of these as you want without penalty.
+	3. Use the btest test harness to check your functions for correctness.
+	4. Use the BDD checker to formally verify your functions
+	5. The maximum number of ops for each function is given in the
+		 header comment for each function. If there are any inconsistencies
+		 between the maximum ops in the writeup and in this file, consider
+		 this file the authoritative source.
 
 /*
  * STEP 2: Modify the following functions according the coding rules.
  *
- *   IMPORTANT. TO AVOID GRADING SURPRISES:
- *   1. Use the dlc compiler to check that your solutions conform
- *      to the coding rules.
- *   2. Use the BDD checker to formally verify that your solutions produce
- *      the correct answers.
+ *	 IMPORTANT. TO AVOID GRADING SURPRISES:
+ *	 1. Use the dlc compiler to check that your solutions conform
+ *			to the coding rules.
+ *	 2. Use the BDD checker to formally verify that your solutions produce
+ *			the correct answers.
  */
 
 
@@ -196,84 +196,153 @@ NOTES:
 int lab_id = 49;
 /*
  * bitAnd - x&y using only ~ and |
- *   Example: bitAnd(6, 5) = 4
- *   Legal ops: ~ |
- *   Max ops: 8
- *   Rating: 1
+ *	 Example: bitAnd(6, 5) = 4
+ *	 Legal ops: ~ |
+ *	 Max ops: 8
+ *	 Rating: 1
  */
 int bitAnd(int x, int y) {
-  return ~(~x|~y);
+	return ~(~x|~y);
 }
 /*
  * fitsShort - return 1 if x can be represented as a
- *   16-bit, two's complement integer.
- *   Examples: fitsShort(33000) = 0, fitsShort(-32768) = 1
- *   Legal ops: ! ~ & ^ | + << >>
- *   Max ops: 8
- *   Rating: 1
+ *	 16-bit, two's complement integer.
+ *	 Examples: fitsShort(33000) = 0, fitsShort(-32768) = 1
+ *	 Legal ops: ! ~ & ^ | + << >>
+ *	 Max ops: 8
+ *	 Rating: 1
  */
 int fitsShort(int x) {
-		printBits(sizeof(x), &x);
-		int signed_flag = x >> 31;
-		int unsigned_number = (x ^ signed_flag); 
-	  return !(unsigned_number >> 15); // "unsigned_number >> 16" should be all zero's 
+	int signed_flag = x >> 31; // Either all zeros or all ones depending on the sign
+	int unsigned_number = (x ^ signed_flag);	// Flip bytes iff signed
+	// "unsigned_number >> 15" should equal zero to fit in a short
+	return !(unsigned_number >> 15); 
 }
 /*
  * fitsBits - return 1 if x can be represented as an
- *  n-bit, two's complement integer.
- *   1 <= n <= 32
- *   Examples: fitsBits(5,3) = 0, fitsBits(-4,3) = 1
- *   Legal ops: ! ~ & ^ | + << >>
- *   Max ops: 15
- *   Rating: 2
+ *	n-bit, two's complement integer.
+ *	 1 <= n <= 32
+ *	 Examples: fitsBits(5,3) = 0, fitsBits(-4,3) = 1
+ *	 Legal ops: ! ~ & ^ | + << >>
+ *	 Max ops: 15
+ *	 Rating: 2
  */
 int fitsBits(int x, int n) {
-  return 2;
+	return 2;
 }
 /*
  * isAsciiDigit - return 1 if 0x30 <= x <= 0x39 (ASCII codes for characters '0' to '9')
- *   Example: isAsciiDigit(0x35) = 1.
- *            isAsciiDigit(0x3a) = 0.
- *            isAsciiDigit(0x05) = 0.
- *   Legal ops: ! ~ & ^ | + << >>
- *   Max ops: 15
- *   Rating: 3
+ *	 Example: isAsciiDigit(0x35) = 1.
+ *						isAsciiDigit(0x3a) = 0.
+ *						isAsciiDigit(0x05) = 0.
+ *	 Legal ops: ! ~ & ^ | + << >>
+ *	 Max ops: 15
+ *	 Rating: 3
  */
 int isAsciiDigit(int x) {
-  return 2;
+//	int y = x & 15; // 
+	// first el. deals with al numbers smaller than like 7, then with an or we look if 
+	// it is 8 or 9 by checking some stuff, and then we check if the number has like the ascii
+	// prefix and bitshift it to make it a mask, and then we check if it's not larger than the 
+ 	// prefix
+//	return (!!(x&7) | (!(x&6) & !(x|9))) & ((x & 48)>>5) & !(x>>6);
+//	return (!!(x&7) ^ ! (x&6) ) & ((x & 48)>>5) & !(x>>6);
+	int ascii_prefix = x>>4;
+	int ascii_suffix = x&15;
+	int minus_three = ~(3) + 1;
+
+//  return (!!(x&7) ^ ! (x&6)) & ((ascii_prefix&2)>>1) & (ascii_prefix&1) & !(x>>6);
+//  return (!!(x&7) ^ ! (x&6)) & !(ascii_prefix+minus_three) & !(x>>6); // apply demorgans law?
+//	return (!!(seven_mask) ^ ! (x&6)) & !((ascii_prefix+minus_three) | (x>>6));
+
+	// False positives approach: 
+
+//	int has_ascii_prefix = !!(ascii_prefix + minus_three);
+	int has_ascii_prefix = !!(~ascii_prefix + 2); // this is pretty good
+
+//	return !!((ascii_suffix^15) | (ascii_suffix^12) | (ascii_suffix^11)) & 
+//	!((ascii_prefix+minus_three) | (x>>6)); // demorgan
+
+	printf("Prefix: %d \n", has_ascii_prefix);
+
+	int ascii_suffix_2th = !(ascii_suffix&2);
+	printf("Suffix 2: %d \n", ascii_suffix_2th);
+	int ascii_suffix_3th = !(ascii_suffix&4);
+	printf("Suffix 3: %d \n", ascii_suffix_3th);
+	// First check four digit, then if --also--(=&) 2 or 3 are on
+//	int has_ascii_suffix = !(ascii_suffix>>3) & !(ascii_suffix_2th |  ascii_suffix_3th) // d.m
+	// After the first '&', if both of them are zero, we're good (if one of them is non-zero, 
+	// we're not)
+	int has_ascii_suffix = !(ascii_suffix>>3) & (ascii_suffix_2th &  ascii_suffix_3th); //dm
+
+	// also demorgan was applied, after the first '&'
+//	int has_ascii_suffix = !(ascii_suffix>>3) & !(ascii_suffix_2th |  ascii_suffix_3th); //dm
+//	int has_ascii_suffix = !((ascii_suffix>>3) | (ascii_suffix_2th |  ascii_suffix_3th));
+	printf("Suffix: %d \n", has_ascii_suffix);
+	return has_ascii_prefix & has_ascii_suffix;
+
+		// Good one
+//	return !( !((ascii_suffix^15) | (ascii_suffix^12) | (ascii_suffix^11)) |
+//	((ascii_prefix+minus_three) | (x>>6)) ); // demorgan
+
+
+//	return !( (x&15) | !(x^11)) & !((ascii_prefix+minus_three) | (x>>6)); 
 }
 /*
  * isPower2 - returns 1 if x is a power of 2, and 0 otherwise
- *   Examples: isPower2(5) = 0, isPower2(8) = 1, isPower2(0) = 0
- *   Note that no negative number is a power of 2.
- *   Legal ops: ! ~ & ^ | + << >>
- *   Max ops: 20
- *   Rating: 4
+ *	 Examples: isPower2(5) = 0, isPower2(8) = 1, isPower2(0) = 0
+ *	 Note that no negative number is a power of 2.
+ *	 Legal ops: ! ~ & ^ | + << >>
+ *	 Max ops: 20
+ *	 Rating: 4
  */
 int isPower2(int x) {
-  return 2;
+	return 2;
 }
 /*
  * float_half - Return bit-level equivalent of expression 0.5*f for
- *   floating point argument f.
- *   Both the argument and result are passed as unsigned int's, but
- *   they are to be interpreted as the bit-level representation of
- *   single-precision floating point values.
- *   When argument is NaN, return argument
- *   Legal ops: Any integer/unsigned operations incl. ||, &&. also if, while
- *   Max ops: 30
- *   Rating: 4
+ *	 floating point argument f.
+ *	 Both the argument and result are passed as unsigned int's, but
+ *	 they are to be interpreted as the bit-level representation of
+ *	 single-precision floating point values.
+ *	 When argument is NaN, return argument
+ *	 Legal ops: Any integer/unsigned operations incl. ||, &&. also if, while
+ *	 Max ops: 30
+ *	 Rating: 4
  */
 unsigned float_half(unsigned uf) {
-  return 2;
+	return 2;
 }
 
 #ifdef DEBUG
 
 int main()
 {
-	printf("Fits short: %d", fitsShort(32768));
+	for(int i=48; i < 58; i++)
+	{
+		printBits(sizeof(i), &i); 	
+//	printf("%d\n", isAsciiDigit(i));
+	}
+	printf("False positives: \n");
+	// (mask properties: digit 3&4 are on (captures last four) digits 2&4 are on (captures last 
+	// two)) \n (so capture anything that satifies the ascii prefix except the two kinds of 
+	// numbers with the properties listed above)
+	for(int i=58; i < 64; i++)
+	{
+		printBits(sizeof(i), &i); 	
+//		printf("%d\n", isAsciiDigit(i));
+	}
+	printf("--------------------------------\n");
 
+	for(int i=48; i < 58; i++)
+	{
+		printf("%d\n", isAsciiDigit(i));
+		printf("\n");
+	}
+
+//	int k = 60;
+//	printf("Input: "); printBits(sizeof(k), &k);
+//	printf("%d\n", isAsciiDigit(k));
 }
 
 #endif
