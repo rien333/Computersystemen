@@ -274,9 +274,18 @@ int isAsciiDigit(int x) {
  *	 Max ops: 20
  *	 Rating: 4
  */
+
 int isPower2(int x) {
-	return 2;
+	int is_nul = !x; // If x is zero, is_nul will be positive
+	int sign = x >> 31; // if the number is negative, sign will contain a chain of 1's
+	int ones = x + ~(0); // any power of 2 will leave a trail of ones if it is subtacted by one
+	// example 1000 - 0001 = 0111
+	int result = x & ones; // this should equal zero for every x that is a power of 2
+	int real_result = result | sign | is_nul;
+	return !(real_result);
 }
+
+
 /*
  * float_half - Return bit-level equivalent of expression 0.5*f for
  *	 floating point argument f.
