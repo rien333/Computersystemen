@@ -13,53 +13,6 @@
  * case it's OK.
  */
 
-#ifdef DEBUG // add "-D DEBUG" to the compile line to define this
-
-/* ----------------------------------------------------------------
-*******************************************************************
-______ _____ _      _____ _____ _____   _____ _   _ _____ _____
-|  _  \  ___| |    |  ___|_   _|  ___| |_   _| | | |_   _/  ___|
-| | | | |__ | |    | |__   | | | |__     | | | |_| | | | \ `--.
-| | | |  __|| |    |  __|  | | |  __|    | | |  _  | | |  `--. \
-| |/ /| |___| |____| |___  | | | |___    | | | | | |_| |_/\__/ /
-|___/ \____/\_____/\____/  \_/ \____/    \_/ \_| |_/\___/\____/
-
-*******************************************************************
-------------------------------------------------------------------- */
-
-#include <stdio.h>
-#include <stdlib.h>
-
-// Prints a decimal number as an binary number
-// (example: int x = 5; printbits(sizeof(x), &x);)
-void printBits(size_t const size, void const * const ptr)
-{
-		unsigned char *b = (unsigned char*) ptr;
-		unsigned char byte;
-		int i, j;
-
-		for (i=size-1;i>=0;i--)
-		{
-				for (j=7;j>=0;j--)
-				{
-						byte = (b[i] >> j) & 1;
-						printf("%u", byte);
-				}
-		}
-		puts("");
-}
-/* ----------------------------------------------------------------
-******************************************************************* ------------------------------------------------------------------- */
-
-#else
-void printBits(int x, int *y)
-{
-	;
-}
-
-
-#endif
-
 #if 0
 /*
  * Instructions to Students:
@@ -303,6 +256,8 @@ int isPower2(int x) {
  *	 Rating: 4
  */
 unsigned float_half(unsigned uf) {
+  /* Substract 1 from the exponent of the number, or righ-shift the input by one if the 
+	exponent is found to contain all zero's. */
 
 	if(!uf)
 	{
@@ -342,21 +297,3 @@ unsigned float_half(unsigned uf) {
 	int new_exp = (uf & kill_exp_mask) | exp_minus_1_s; // replace the old exp by the new one
 	return new_exp;
 }
-
-#ifdef DEBUG
-
-int main()
-{
-	int x = -8388608;
-	printBits(sizeof(x), &x);
-	int y = 2139095040;
-	printBits(sizeof(y), &y);
-	int z = 2130706432;
-	printBits(sizeof(z), &z);
-	float_half(-8388608);
-//	int x1 = 8388603;
-//	printBits(sizeof(x1), &x1);
-
-}
-
-#endif
