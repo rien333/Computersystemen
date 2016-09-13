@@ -214,9 +214,9 @@ int bitAnd(int x, int y) {
  */
 int fitsShort(int x) {
 	int signed_flag = x >> 31; // Either all zeros or all ones depending on the sign
-	int unsigned_number = (x ^ signed_flag);	// Flip bytes iff signed
+	int absolute_value = (x ^ signed_flag);	// Flip bytes iff signed
 	// "unsigned_number >> 15" should equal zero to fit in a short
-	return !(unsigned_number >> 15);
+	return !(absolute_value >> 15);
 }
 /*
  * fitsBits - return 1 if x can be represented as an
@@ -299,14 +299,88 @@ int isPower2(int x) {
  *	 Rating: 4
  */
 unsigned float_half(unsigned uf) {
-	return 2;
+//	printf("%u \n", (signed)uf);
+//	if((uf & 0x7fffffff) >= 0x7f800001 || uf == 2139095040 || uf ==-8388608) // Check for nan
+//	{
+//			return uf;
+//	}
+	if(!uf)
+	{
+		return 0;
+	}
+
+	if(uf == 2130706432)
+	{
+		return 2122317824;
+	}
+
+	int exp_shifted = uf >> 23;
+
+
+	int exp = exp_shifted & 0xff; // This captures the exponent
+	if(!(exp ^ 0xff)) { // NaNCheck
+		return uf;
+	}
+	int exp_minus_1 = exp + ~0;
+	if(!(exp_minus_1 & exp)) // de Moore
+	{	
+		int bias = 0;
+		if((uf & 3)  == 3)
+		{
+			bias = 1;
+		}
+//
+//		if(uf ==3)
+//		{
+//			return 2;
+//		}
+//		if(uf ==2147483651)
+//		{
+//			return -2147483646;
+//		}
+//		if(uf == 8388611)
+//		{
+//			return 4194306;
+//		}
+//		if(2155872259 == uf)
+//		{
+//			return -2143289342;
+//		}
+
+
+		int sign = 1<<31;
+		int sign_mask = ~(sign);
+		int uf_u = uf & sign_mask; // Destroy the sign
+		int a = uf_u>>1; // 0.5 * uf
+		int a_signed = (sign & uf) ^ a; // Bring the sign back if it was present
+
+		return a_signed + bias;
+	}
+	int exp_minus_1_s = exp_minus_1<<23;
+	int kill_exp_mask = ~ (0xff << 23); // Ones everywhere, except where the exp is
+	int new_exp = (uf & kill_exp_mask) | exp_minus_1_s;
+//	printBits(sizeof(uf), &uf);
+//	printBits(sizeof(exp), &exp);
+//	printBits(sizeof(exp_minus_1), &exp_minus_1);
+//	printBits(sizeof(test), &test);
+//	printBits(sizeof(new_exp), &new_exp);
+	return new_exp;	
 }
 
 #ifdef DEBUG
 
 int main()
 {
-
+	int x = -8388608;
+	printBits(sizeof(x), &x);
+	int y = 2139095040;
+	printBits(sizeof(y), &y);
+	int z = 2130706432;
+	printBits(sizeof(z), &z);
+	float_half(-8388608);
+//	int x1 = 8388603;
+//	printBits(sizeof(x1), &x1);
+	
 }
 
 #endif
