@@ -299,11 +299,7 @@ int isPower2(int x) {
  *	 Rating: 4
  */
 unsigned float_half(unsigned uf) {
-//	printf("%u \n", (signed)uf);
-//	if((uf & 0x7fffffff) >= 0x7f800001 || uf == 2139095040 || uf ==-8388608) // Check for nan
-//	{
-//			return uf;
-//	}
+
 	if(!uf)
 	{
 		return 0;
@@ -316,12 +312,14 @@ unsigned float_half(unsigned uf) {
 		return uf;
 	}
 
+	// Substract one from the exponent to do the division by two
 	int exp_minus_1 = exp + ~0;
 	// We only have to shift one to the right if the new exponent is zero or already zero
 	if(!(exp_minus_1 & exp)) // de moore law was applied here
 	{	
 		// For some super weird reason we should not round the binary three down to 1 if it's 
-		// present, but to two. Therefore we add +1 if the binary representation ends with two 1s. 
+		// present and also no exponent is present, but to two. 
+		// Therefore we add +1 if the binary representation ends with two 1s. 
 		int bias = 0;
 		if(!((uf & 3)  ^ 3)) 
 		{
@@ -334,14 +332,10 @@ unsigned float_half(unsigned uf) {
 		int a_signed = (sign & uf) ^ a; // Bring the sign back if it was present
 		return a_signed + bias;
 	}
-	int exp_minus_1_s = exp_minus_1<<23;
+
+	int exp_minus_1_s = exp_minus_1<<23; // Bring the exponent back to it's original location
 	int kill_exp_mask = ~ (0xff << 23); // Ones everywhere, except where the exp is
-	int new_exp = (uf & kill_exp_mask) | exp_minus_1_s;
-//	printBits(sizeof(uf), &uf);
-//	printBits(sizeof(exp), &exp);
-//	printBits(sizeof(exp_minus_1), &exp_minus_1);
-//	printBits(sizeof(test), &test);
-//	printBits(sizeof(new_exp), &new_exp);
+	int new_exp = (uf & kill_exp_mask) | exp_minus_1_s; // replace the old exp by the new one
 	return new_exp;	
 }
 
