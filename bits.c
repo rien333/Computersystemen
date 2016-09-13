@@ -202,8 +202,11 @@ int lab_id = 49;
  *	 Rating: 1
  */
 int bitAnd(int x, int y) {
+	/* exploit logical equivalence despite different logical operators */
 	return ~(~x|~y);
 }
+
+
 /*
  * fitsShort - return 1 if x can be represented as a
  *	 16-bit, two's complement integer.
@@ -213,11 +216,13 @@ int bitAnd(int x, int y) {
  *	 Rating: 1
  */
 int fitsShort(int x) {
-	int signed_flag = x >> 31; // Either all zeros or all ones depending on the sign
-	int absolute_value = (x ^ signed_flag);	// Flip bytes iff signed
-	// "unsigned_number >> 15" should equal zero to fit in a short
-	return !(absolute_value >> 15);
+	/* Use shifts and masking to determine whether the number will fit in 16 bits */
+	int signed_flag = x >> 31; 								// Either all zeros or all ones depending on the sign
+	int absolute_value = (x ^ signed_flag);		// Flip bytes iff signed
+	return !(absolute_value >> 15);						// "unsigned_number >> 15" should equal zero to fit in a short
 }
+
+
 /*
  * fitsBits - return 1 if x can be represented as an
  *	n-bit, two's complement integer.
@@ -227,16 +232,15 @@ int fitsShort(int x) {
  *	 Max ops: 15
  *	 Rating: 2
  */
-
 int fitsBits(int x, int n) {
-
- int signed_flag = x >> 31; // Either all zeros or all ones depending on the sign
- int unsigned_number = (x ^ signed_flag);	// Flip bytes iff signed
- int neg_one = ~(0);
- int bits_shift = neg_one + n; // Shift depends on the desired amount of bits
- // "unsigned_number >> bits_shift" will equal zero if the number fits in the bits
- int shifted = unsigned_number >> bits_shift;
- return !(shifted);
+	/* Use shifts of variable length and maskin to determine
+	 * whether the number will fit in x amount of bits */
+	int signed_flag = x >> 31; 									 // Either all zeros or all ones depending on the sign
+	int unsigned_number = (x ^ signed_flag);		 // Flip bytes iff signed
+	int neg_one = ~(0);
+	int bits_shift = neg_one + n; 							 // Shift depends on the desired amount of bits
+	int shifted = unsigned_number >> bits_shift; // "unsigned_number >> bits_shift" will equal zero if the number fits in the bits
+	return !(shifted);
 }
 
 
@@ -250,7 +254,8 @@ int fitsBits(int x, int n) {
  *	 Rating: 3
  */
 int isAsciiDigit(int x) {
-
+	/* differentiates the Ascii digits from
+	 * other ascii characters, using properties of the bit vectors (see labboek)  */
 	int ascii_prefix = x>>4;
 	int ascii_suffix = x&15;
 
@@ -275,13 +280,12 @@ int isAsciiDigit(int x) {
  *	 Max ops: 20
  *	 Rating: 4
  */
-
 int isPower2(int x) {
-	int is_nul = !x; // If x is zero, is_nul will be positive
-	int sign = x >> 31; // if the number is negative, sign will contain a chain of 1's
-	int ones = x + ~(0); // any power of 2 will leave a trail of ones if it is subtacted by one
-	// example 1000 - 0001 = 0111
-	int result = x & ones; // this should equal zero for every x that is a power of 2
+	/* exploits a visual pattern of the numbers that are a power of two */
+	int is_nul = !x; 								// If x is zero, is_nul will be positive
+	int sign = x >> 31; 						// if the number is negative, sign will contain a chain of 1's
+	int ones = x + ~(0); 						// any power of 2 will leave a trail of ones if it is subtacted by one (1000 - 0001 = 0111)
+	int result = x & ones; 					// this should equal zero for every x that is a power of 2
 	int real_result = result | sign | is_nul;
 	return !(real_result);
 }
@@ -316,12 +320,12 @@ unsigned float_half(unsigned uf) {
 	int exp_minus_1 = exp + ~0;
 	// We only have to shift one to the right if the new exponent is zero or already zero
 	if(!(exp_minus_1 & exp)) // de moore law was applied here
-	{	
-		// For some super weird reason we should not round the binary three down to 1 if it's 
-		// present and also no exponent is present, but to two. 
-		// Therefore we add +1 if the binary representation ends with two 1s. 
+	{
+		// For some super weird reason we should not round the binary three down to 1 if it's
+		// present and also no exponent is present, but to two.
+		// Therefore we add +1 if the binary representation ends with two 1s.
 		int bias = 0;
-		if(!((uf & 3)  ^ 3)) 
+		if(!((uf & 3)  ^ 3))
 		{
 			bias = 1;
 		}
@@ -336,7 +340,7 @@ unsigned float_half(unsigned uf) {
 	int exp_minus_1_s = exp_minus_1<<23; // Bring the exponent back to it's original location
 	int kill_exp_mask = ~ (0xff << 23); // Ones everywhere, except where the exp is
 	int new_exp = (uf & kill_exp_mask) | exp_minus_1_s; // replace the old exp by the new one
-	return new_exp;	
+	return new_exp;
 }
 
 #ifdef DEBUG
@@ -352,7 +356,7 @@ int main()
 	float_half(-8388608);
 //	int x1 = 8388603;
 //	printBits(sizeof(x1), &x1);
-	
+
 }
 
 #endif
