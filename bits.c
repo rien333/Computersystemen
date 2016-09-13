@@ -310,38 +310,21 @@ unsigned float_half(unsigned uf) {
 	}
 
 	int exp_shifted = uf >> 23;
-
 	int exp = exp_shifted & 0xff; // This captures the exponent
+
 	if(!(exp ^ 0xff)) { // NaNCheck
 		return uf;
 	}
+
 	int exp_minus_1 = exp + ~0;
 	// We only have to shift one to the right if the new exponent is zero or already zero
-	if(!(exp_minus_1 & exp)) // de Moore
+	if(!(exp_minus_1 & exp)) // de moore law was applied here
 	{	
 		int bias = 0;
 		if((uf & 3)  == 3)
 		{
 			bias = 1;
 		}
-//
-//		if(uf ==3)
-//		{
-//			return 2;
-//		}
-//		if(uf ==2147483651)
-//		{
-//			return -2147483646;
-//		}
-//		if(uf == 8388611)
-//		{
-//			return 4194306;
-//		}
-//		if(2155872259 == uf)
-//		{
-//			return -2143289342;
-//		}
-
 
 		int sign = 1<<31;
 		int sign_mask = ~(sign);
