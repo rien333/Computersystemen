@@ -320,12 +320,13 @@ unsigned float_half(unsigned uf) {
 	// We only have to shift one to the right if the new exponent is zero or already zero
 	if(!(exp_minus_1 & exp)) // de moore law was applied here
 	{	
+		// For some super weird reason we should not round the binary three down to 1 if it's 
+		// present, but to two. Therefore we add +1 if the binary representation ends with two 1s. 
 		int bias = 0;
-		if((uf & 3)  == 3)
+		if(!((uf & 3)  ^ 3)) 
 		{
 			bias = 1;
 		}
-
 		int sign = 1<<31;
 		int sign_mask = ~(sign);
 		int uf_u = uf & sign_mask; // Destroy the sign
