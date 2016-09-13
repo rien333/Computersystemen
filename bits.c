@@ -308,7 +308,7 @@ unsigned float_half(unsigned uf) {
 	int exp_shifted = uf >> 23;
 	int exp = exp_shifted & 0xff; // This captures the exponent
 
-	if(!(exp ^ 0xff)) { // NaNCheck
+	if(!(exp ^ 0xff)) { // NaN check
 		return uf;
 	}
 
